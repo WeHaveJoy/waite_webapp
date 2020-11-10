@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "directories": {
-    "test": "test"
+    "test": "mocha"
   },
   "scripts": {
     "test": "mocha",
@@ -30,5 +30,8 @@
     "nodemon": "^2.0.6",
     "pg": "^8.4.2",
     "pg-pool": "^3.2.2"
+  },
+  "devDependencies": {
+    "mocha": "^8.2.1"
   }
 }
