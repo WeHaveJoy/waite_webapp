@@ -1,0 +1,16 @@
+language: 
+  - node_js
+
+node_js:
+  - 12
+
+env:
+  - DATABASE_URL=postgresql://postgres@localhost:5432/waiter_availability_test
+
+before_script:
+  
+  - psql -c 'create database waiter_availability_test;' -U postgres
+  - psql -U postgres -d waiter_availability_test -a -f table.sql
+
+services:
+  - postgresql

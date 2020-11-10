@@ -63,7 +63,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.get('/', function(req,res){
+app.get('/', function (req, res) {
 
     res.render('index')
 })
