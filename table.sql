@@ -20,3 +20,5 @@ INSERT INTO weekdays(weekday) VALUES('Tuesday');
 INSERT INTO weekdays(weekday) VALUES('Wednesday');
 INSERT INTO weekdays(weekday) VALUES('Thursday');
 INSERT INTO weekdays(weekday) VALUES('Friday');
+
+--  select * from shifts join weekdays on shifts.weekd_id = weekdays.weekday_id join waiters on shifts.waiter_id = waiters.waiters_id;

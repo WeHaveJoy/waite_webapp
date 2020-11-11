@@ -1,0 +1,46 @@
+<div class="container">
+
+  <h1>CHAI COFFEE SHOP</h1>
+  <form action="/waiters" method="POST">
+
+    <div>
+      <input type="text" name="names" class="nameEntered" value="" placeholder="enter your name">
+    </div>
+    <br>
+    <div class="days">
+      <strong class="choose">Choose the day(s) you would like to work on, don't choose more than 3 days:</strong>
+      <br> <br>
+      {{!-- <label class="container">Sunday
+        <input type="checkbox">
+        <span class="checkmark"></span>
+      </label> --}}
+      <label class="container">Monday
+        <input type="checkbox">
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">Tuesday
+        <input type="checkbox">
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">Wednesday
+        <input type="checkbox">
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">Thursday
+        <input type="checkbox">
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">Friday
+        <input type="checkbox">
+        <span class="checkmark"></span>
+      </label>
+      {{!-- <label class="container">Saturday
+        <input type="checkbox">
+        <span class="checkmark"></span>
+      </label> --}}
+      <br> <br>
+      <button class="button-primary" type="submit" name="button">SUBMIT</button>
+    </div>
+  </form>
+
+</div>

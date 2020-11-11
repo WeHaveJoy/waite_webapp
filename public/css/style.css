@@ -79,12 +79,12 @@ h1, .choose{
     transform: rotate(45deg);
   } */
 
-  .button-primary{
+  button{
       /* color: chartreuse; */
       font-size: larger;
       background-color: yellow;
   }
 
-  .button-primary:hover{
+  button:hover{
     background-color: palevioletred;
   }

@@ -68,6 +68,29 @@ app.get('/', function (req, res) {
     res.render('index')
 })
 
+app.post('/', function(req, res){
+
+    res.render('index')
+})
+
+app.post('/weedays', async function(){
+
+
+    res.render('weekdays')
+})
+
+
+app.get('/waiters', async function(){
+
+    res.render('waiters')
+})
+
+app.get('/waiters:user', async function(){
+
+    res.render('waiters:user')
+})
+
+
 const PORT = process.env.PORT || 3000
 app.listen(PORT, function () {
 
