@@ -18,59 +18,62 @@ describe('The basic database Waiter Availability web app', function () {
     });
 
 
-    //  it('should  get all the waiters', async function () {
+     it('should  get all the waiters', async function () {
 
-    //     let Wavailability = waiter(pool);
+        let Wavailability = waiter(pool);
 
-    //     await Wavailability.addWaiters("Sino");
-    //     var waiters = await Wavailability.getWaiters();
-    //     assert.equal("Sino", waiters[0].waiter_name);
+        await Wavailability.addWaiters("Sino");
+        var waiters = await Wavailability.getWaiters();
+        assert.equal("Sino", waiters[0].waiter_name);
 
-    // });
+    });
 
 
-    // it('should get waiter by name', async function () {
+    it('should get waiter by name', async function () {
 
-    //     let Wavailability = waiter(pool);
+        let Wavailability = waiter(pool);
 
-    //     await Wavailability.addWaiters("Zizipho");
-    //     var name =  await Wavailability.getWaiterByName('Zizipho');
-    //     //console.log(name);
+        await Wavailability.addWaiters("Zizipho");
+        var name =  await Wavailability.getWaiterByName('Zizipho');
+        //console.log(name);
         
 
-    //     assert.deepEqual({waiter_name: 'Zizipho' },name)
-    // });
+        assert.deepEqual({waiter_name: 'Zizipho' },name)
+    });
 
 
     it('should add waiters shifts', async function () {
 
         let Wavailability = waiter(pool);
-
+        await Wavailability.addWaiters("Zintle")
+        await Wavailability.getWaiterId("Zintle")
+        await Wavailability.getSpecificDayId("Friday")
+        // await Wavailability.addShifts(1,5)
      var shift =   await Wavailability.addWaitersShifts(1,5);
 
         assert.equal(1,5, shift)
     });
 
 
-    // it('should check if the waiter is added', async function () {
+    it('should check if the waiter is added', async function () {
 
-    //     let Wavailability = waiter(pool);
+        let Wavailability = waiter(pool);
 
-    //     await Wavailability.addWaiters('');
-    //     var name = await Wavailability.checkWaiters(0);
+        await Wavailability.addWaiters('');
+        var name = await Wavailability.checkWaiters(0);
         
-    //     assert.equal(false, name.rowCount== 0)
-    // });
+        assert.equal(false, name.rowCount== 0)
+    });
 
-    // it('should add the watiers', async function () {
+    it('should add the watiers', async function () {
 
-    //     let Wavailability = waiter(pool);
+        let Wavailability = waiter(pool);
 
-    //     await Wavailability.addWaiters('Nwabisa');
-    //     var name = await Wavailability.checkWaiters(1);
+        await Wavailability.addWaiters('Nwabisa');
+        var name = await Wavailability.checkWaiters(1);
         
-    //     assert.equal(false, name.rowCount== 1)
-    // });
+        assert.equal(false, name.rowCount== 1)
+    });
 
     //the following tests are not passing
 
@@ -84,15 +87,15 @@ describe('The basic database Waiter Availability web app', function () {
     //     assert.equal(5,1, Wavailability.addShifts(5,1))
     // });
 
-    // it('should delete user waiter shift', async function () {
+    it('should delete user waiter shift', async function () {
 
-    //     let Wavailability = waiter(pool);
+        let Wavailability = waiter(pool);
 
-    //     await Wavailability.addWaiters('Thato')
-    //     await Wavailability.deleteUserWaitersShift('Thato');
+        await Wavailability.addWaiters('Thato')
+        await Wavailability.deleteUserWaitersShift('Thato');
        
-    //     assert.equal(true, Wavailability.addShifts(true))
-    // });
+        assert.equal(true, Wavailability.addShifts(true))
+    });
 
 
 

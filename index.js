@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const waiter = require('./waiter-availability.js');
 const session = require('express-session');
 //const flash = require('express-flash');
-//const _ = require('lodash');
+const _ = require('lodash');
 
 const app = express();
 
@@ -73,21 +73,44 @@ app.post('/', function(req, res){
     res.render('index')
 })
 
-app.post('/weedays', async function(){
+app.post('/weedays', async function(req, res){
 
 
     res.render('weekdays')
 })
 
+// app.get('/waiters', async function(req, res){
 
-app.get('/waiters', async function(){
+   
+//     res.render('waiters')
+// })
 
-    res.render('waiters')
+
+app.get('/waitersList',async function(req, res){
+
+const waiters = await Wavailability.getWaiters()
+
+    res.render('waitersList', {
+        getList: waiters 
+    })
 })
 
-app.get('/waiters:user', async function(){
+app.get('/waiters', async function(req, res){
 
-    res.render('waiters:user')
+    var name = _.upperCase(req.body.nameEntered);
+    var days = req.body.checkbox;
+
+    await Wavailability.workFlow(name,days)
+
+    if(name === undefined){
+        req.flash('error','Oops! you forgot to enter your name, PLease enter your name ' )
+    }
+    else if(!days){
+        req.flash('error', 'Please choose a day(s) that you that you would like to on')
+
+    }
+
+    res.render('waiters')
 })
 
 

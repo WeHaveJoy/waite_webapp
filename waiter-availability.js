@@ -42,6 +42,11 @@ module.exports = function Wavailability(pool) {
         return names.rowCount == 0
     }
 
+    async function getWaiterId(waiterId){
+        var id = await pool.query("select waiters_id from waiters where waiter_name=$1", [waiterId]);
+        return id.rows
+    }
+
 
     async function deleteUserWaitersShift(name) {
 
@@ -60,16 +65,23 @@ module.exports = function Wavailability(pool) {
 
     }
 
+    async function getSpecificDayId(dayId) {
+        const day = await pool.query(`select weekday_id from weekdays where weekday = $1`, [dayId])
+        return day.rows[0];
+    }
+
 
     return {
         addWaiters,
         addWaitersShifts,
         getWaiters,
+        getWaiterId,
         joinTables,
         getWaiterByName,
         checkWaiters,
         deleteUserWaitersShift,
         addShifts,
-        workFlow
+        workFlow,
+        getSpecificDayId
     }
 }
