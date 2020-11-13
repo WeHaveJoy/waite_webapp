@@ -1,15 +1,15 @@
 module.exports = function Wavailability(pool) {
 
 
-    async function workFlow(waiterName, weekdayIds) {
-        if (await checkWaiters(waiterName)) {
+    async function workFlow(weekdayIds, waiterId) {
+        if (await checkWaiters(waiterId)) {
             //add shifts
-            await addShifts(weekdayIds)
+            await addShifts(waiterId, weekdayIds)
         } else {
             // delete shift
             await deleteUserWaitersShift(weekdayIds)
-            // add shifts
-            await addShifts(weekdayIds)
+            // add waiters shifts
+            await addWaitersShifts(waiterId, weekdayIds)
 
         }
 
@@ -21,9 +21,20 @@ module.exports = function Wavailability(pool) {
     }
 
     async function addWaiters(nameEntered) {
-        await pool.query(`insert into waiters (waiter_name) values($1)`, [nameEntered]);
+        if (nameEntered) {
+            await pool.query(`insert into waiters (waiter_name) values($1)`, [nameEntered]);
+        }
+        else {
+            return false;
+        }
 
     }
+    async function checkDays(days) {
+        var day = await pool.query(`select weekday_id from weekdays where weekday = $1`, [days])
+        return day.rowCount == 0;
+
+    }
+
 
     // const addName =  () => await pool.query();
 
@@ -37,12 +48,14 @@ module.exports = function Wavailability(pool) {
         await pool.query(`insert into shifts (weekD_id, waiter_id) values($1,$2)`, [weekdayid, waiterid])
     }
 
+    
+
     async function checkWaiters(nameEntered) {
         var names = await pool.query("select waiters_id from waiters where waiter_name=$1", [nameEntered]);
         return names.rowCount == 0
     }
 
-    async function getWaiterId(waiterId){
+    async function getWaiterId(waiterId) {
         var id = await pool.query("select waiters_id from waiters where waiter_name=$1", [waiterId]);
         return id.rows
     }
@@ -58,30 +71,40 @@ module.exports = function Wavailability(pool) {
         return waiter.rows;
     }
 
+    async function getDays(){
+        var days = await pool.query(`select weekday from weekdays`)
+        return days.rows
+    }
 
     async function getWaiterByName(name) {
         const waiter = await pool.query(`select waiter_name from waiters where waiter_name=$1`, [name])
         return waiter.rows[0];
-
     }
 
     async function getSpecificDayId(dayId) {
         const day = await pool.query(`select weekday_id from weekdays where weekday = $1`, [dayId])
-        return day.rows[0];
+        return day.rows[0].id;
+    }
+
+    async function deleteDataFromWaiters() {
+        await pool.query(`delete from waiters`)
     }
 
 
     return {
         addWaiters,
+        getDays,
         addWaitersShifts,
         getWaiters,
         getWaiterId,
         joinTables,
         getWaiterByName,
+        deleteDataFromWaiters,
         checkWaiters,
         deleteUserWaitersShift,
         addShifts,
         workFlow,
+        checkDays,
         getSpecificDayId
     }
 }

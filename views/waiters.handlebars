@@ -1,14 +1,14 @@
 <div class="container">
 
   <h1>CHAI COFFEE SHOP</h1>
-  <form action="/waiters" method="POST">
+  <form action='/waiters/{username}' method="POST">
 
-    <div>
+    {{!-- <div>
       <input type="text" name="names" class="nameEntered" value="" placeholder="enter your name">
-    </div>
+    </div> --}}
     <br>
     <div class="days">
-      <strong class="choose">Choose the day(s) you would like to work on, don't choose more than 3 days:</strong>
+      <strong class="choose">Choose the day(s) you would like to work on:</strong>
       <br> <br>
       
       <label class="container">Monday
@@ -34,6 +34,7 @@
       
       <br> <br>
       <button class="button-primary" type="submit" name="button">SUBMIT</button>
+       <button class="button-primary" type="submit" name="button"><a href="/">HOME</a></button>
     </div>
   </form>
 

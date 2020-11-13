@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 //const Routes = require('./routes');
 const waiter = require('./waiter-availability.js');
 const session = require('express-session');
-//const flash = require('express-flash');
+const flash = require('express-flash');
 const _ = require('lodash');
 
 const app = express();
@@ -29,7 +29,7 @@ app.use(session({
 }));
 
 
-//app.use(flash());
+app.use(flash());
 
 //setup template handlebars as the template engine
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
@@ -63,55 +63,102 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.get('/', function (req, res) {
+app.get('/waiters', function (req, res) {
 
     res.render('index')
 })
 
-app.post('/', function(req, res){
+app.post('/', function (req, res) {
 
     res.render('index')
 })
 
-app.post('/weedays', async function(req, res){
+// app.post('/weedays', async function (req, res) {
 
 
-    res.render('weekdays')
-})
+//     res.render('weekdays')
+// })
 
 // app.get('/waiters', async function(req, res){
 
-   
+
 //     res.render('waiters')
 // })
 
 
-app.get('/waitersList',async function(req, res){
 
-const waiters = await Wavailability.getWaiters()
+app.get('/days', async function (req, res) {
 
-    res.render('waitersList', {
-        getList: waiters 
+    const waiters = await Wavailability.getWaiters()
+
+    res.render('days', {
+        getList: waiters
     })
 })
 
-app.get('/waiters', async function(req, res){
-
-    var name = _.upperCase(req.body.nameEntered);
-    var days = req.body.checkbox;
-
-    await Wavailability.workFlow(name,days)
-
-    if(name === undefined){
-        req.flash('error','Oops! you forgot to enter your name, PLease enter your name ' )
-    }
-    else if(!days){
-        req.flash('error', 'Please choose a day(s) that you that you would like to on')
-
-    }
+app.get('/waiters/:username', async function (req, res) {
 
     res.render('waiters')
 })
+
+app.post('/waiters/:username', async function (req, res) {
+
+    var name = _.capitalize(req.params.username);
+    
+    console.log(name + "tyuiortyuitgh");
+
+    var days = req.body.checkbox;
+
+    // await Wavailability.getWaiterByName(days)
+
+    //await Wavailability.workFlow(name,days)
+    await Wavailability.addWaiters(name)
+    if (!days) {
+        req.flash('error', 'Please choose a day(s) that you that you would like to work on')
+        res.render('waiters');
+        return;
+    }
+    else if (name === undefined) {
+        req.flash('error', 'Oops! you forgot to enter your name, Please enter your name ')
+        res.render('waiters');
+        return;
+    }
+    else if (isNaN(name) === false) {
+        req.flash('error', "Please don't enter a number")
+        res.render('index');
+        return;
+    }
+
+    res.render('waiters',{
+        username : name
+    })
+})
+
+app.get('/reset', async function (req, res) {
+
+    await Wavailability.deleteDataFromWaiters()
+
+    res.render('reset')
+})
+
+// app.get('/waiters/:user', async function (req, res) {
+
+//     const user = req.params.name;
+
+//     const theUser = await Wavailability.getWaiterByName(user)
+
+
+//     var days = req.body.checkbox;
+
+//     if (!days) {
+//         req.flash('error', 'Please choose a day(s) that you that you would like to work on')
+//         res.render('waiters:user');
+//         return;
+
+//     }
+
+//     res.render('waiters/:user', { insertedName: `Hello, ${theUser},  please select the days that you're available on` })
+// })
 
 
 const PORT = process.env.PORT || 3000
