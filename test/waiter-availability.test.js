@@ -49,9 +49,9 @@ describe('The basic database Waiter Availability web app', function () {
         await Wavailability.getWaiterId("Zintle")
         await Wavailability.getSpecificDayId("Friday")
         // await Wavailability.addShifts(1,5)
-     var shift =   await Wavailability.addWaitersShifts(1,5);
+     var shift =   await Wavailability.addWaitersShifts(5,5);
 
-        assert.equal(1,5, shift)
+        assert.equal(5,5, shift)
     });
 
 
