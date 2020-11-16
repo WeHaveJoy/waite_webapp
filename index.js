@@ -85,8 +85,6 @@ app.post('/', function (req, res) {
 //     res.render('waiters')
 // })
 
-
-
 app.get('/days', async function (req, res) {
 
     const waiters = await Wavailability.getWaiters()
@@ -97,42 +95,51 @@ app.get('/days', async function (req, res) {
 })
 
 app.get('/waiters/:username', async function (req, res) {
+    var name = (req.params.username);
 
-    res.render('waiters')
+    res.render('waiters',{
+        waiter_name:name
+    })
 })
 
 app.post('/waiters/:username', async function (req, res) {
 
     var name = _.capitalize(req.params.username);
-    
-    console.log(name + "tyuiortyuitgh");
 
-    var days = req.body.checkbox;
+   // console.log(name + "tyuiortyuitgh");
 
-    // await Wavailability.getWaiterByName(days)
+    var days = req.body.checkmark;
 
-    //await Wavailability.workFlow(name,days)
+
     await Wavailability.addWaiters(name)
+    
+    await Wavailability.workFlow(days, name)
     if (!days) {
         req.flash('error', 'Please choose a day(s) that you that you would like to work on')
         res.render('waiters');
         return;
     }
-    else if (name === undefined) {
-        req.flash('error', 'Oops! you forgot to enter your name, Please enter your name ')
-        res.render('waiters');
-        return;
-    }
-    else if (isNaN(name) === false) {
-        req.flash('error', "Please don't enter a number")
-        res.render('index');
-        return;
-    }
+
+    // else if (name === undefined) {
+    //     req.flash('error', 'Oops! you forgot to enter your name, Please enter your name ')
+    //     res.render('waiters');
+    //     return;
+    // }
+
+    // else if (isNaN(name) === false) {
+    //     req.flash('error', "Please don't enter a number")
+    //     res.render('index');
+    //     return;
+    // }
 
     res.render('waiters',{
-        username : name
+        username : name,
+        shift: days
     })
 })
+
+
+
 
 app.get('/reset', async function (req, res) {
 

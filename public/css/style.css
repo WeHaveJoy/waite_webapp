@@ -9,6 +9,10 @@ h1,h2, .choose{
     color: yellow;
 }
 
+.pa{
+    color: springgreen;
+}
+
 /* The container */
 .container {
     display: block;
