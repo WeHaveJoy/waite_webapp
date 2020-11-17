@@ -90,7 +90,7 @@ describe('The basic database Waiter Availability web app', function () {
     it('should delete user waiter shift', async function () {
 
         let Wavailability = waiter(pool);
-8\
+
         await Wavailability.addWaiters('Thato')
         await Wavailability.deleteUserWaitersShift('Thato');
        
