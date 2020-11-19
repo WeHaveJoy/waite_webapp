@@ -15,10 +15,13 @@ create table shifts(
     foreign key (waiter_id) references waiters(waiters_id)
 );
 
+INSERT INTO weekdays(weekday) VALUES('Sunday');
 INSERT INTO weekdays(weekday) VALUES('Monday');
 INSERT INTO weekdays(weekday) VALUES('Tuesday');
 INSERT INTO weekdays(weekday) VALUES('Wednesday');
 INSERT INTO weekdays(weekday) VALUES('Thursday');
 INSERT INTO weekdays(weekday) VALUES('Friday');
+INSERT INTO weekdays(weekday) VALUES('Saturday');
+
 
 --  select * from shifts join weekdays on shifts.weekd_id = weekdays.weekday_id join waiters on shifts.waiter_id = waiters.waiters_id;

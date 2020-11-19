@@ -87,18 +87,26 @@ app.post('/', function (req, res) {
 
 app.get('/days', async function (req, res) {
 
-    const waiters = await Wavailability.getWaiters()
-
+    // const waiters = await Wavailability.joinTables()
     res.render('days', {
-        getList: waiters
+       // getList: waiters
+    })
+})
+
+app.post('/days', async function(req, res){
+
+    const waiters = await Wavailability.joinTables()
+
+    res.render('days',{
+        shifts: waiters 
     })
 })
 
 app.get('/waiters/:username', async function (req, res) {
     var name = (req.params.username);
 
-    res.render('waiters',{
-        waiter_name:name
+    res.render('waiters', {
+        waiter_name: name
     })
 })
 
@@ -106,14 +114,15 @@ app.post('/waiters/:username', async function (req, res) {
 
     var name = _.capitalize(req.params.username);
 
-   // console.log(name + "tyuiortyuitgh");
+    // console.log(name + "tyuiortyuitgh");
 
     var days = req.body.checkmark;
 
 
     await Wavailability.addWaiters(name)
-    
-    await Wavailability.workFlow(days, name)
+
+    // await Wavailability.workFlow(days, name)
+    await Wavailability.addShifts(name, days)
     if (!days) {
         req.flash('error', 'Please choose a day(s) that you that you would like to work on')
         res.render('waiters');
@@ -132,8 +141,8 @@ app.post('/waiters/:username', async function (req, res) {
     //     return;
     // }
 
-    res.render('waiters',{
-        username : name,
+    res.render('waiters', {
+        username: name,
         shift: days
     })
 })

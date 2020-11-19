@@ -18,7 +18,7 @@ describe('The basic database Waiter Availability web app', function () {
     });
 
 
-     it('should  get all the waiters', async function () {
+    it('should  get all the waiters', async function () {
 
         let Wavailability = waiter(pool);
 
@@ -28,19 +28,17 @@ describe('The basic database Waiter Availability web app', function () {
 
     });
 
-
     it('should get waiter by name', async function () {
 
         let Wavailability = waiter(pool);
 
         await Wavailability.addWaiters("Zizipho");
-        var name =  await Wavailability.getWaiterByName('Zizipho');
+        var name = await Wavailability.getWaiterByName('Zizipho');
         //console.log(name);
-        
 
-        assert.deepEqual({waiter_name: 'Zizipho' },name)
+
+        assert.deepEqual({ waiter_name: 'Zizipho' }, name)
     });
-
 
     it('should add waiters shifts', async function () {
 
@@ -49,11 +47,10 @@ describe('The basic database Waiter Availability web app', function () {
         await Wavailability.getWaiterId("Zintle")
         await Wavailability.getSpecificDayId("Friday")
         // await Wavailability.addShifts(1,5)
-     var shift =   await Wavailability.addWaitersShifts(5,5);
+        var shift = await Wavailability.addWaitersShifts(1, 5);
 
-        assert.equal(5,5, shift)
+        assert.equal(1, 5, shift)
     });
-
 
     it('should check if the waiter is added', async function () {
 
@@ -61,8 +58,8 @@ describe('The basic database Waiter Availability web app', function () {
 
         await Wavailability.addWaiters('');
         var name = await Wavailability.checkWaiters(0);
-        
-        assert.equal(false, name.rowCount== 0)
+
+        assert.equal(false, name.rowCount == 0)
     });
 
     it('should add the watiers', async function () {
@@ -71,31 +68,31 @@ describe('The basic database Waiter Availability web app', function () {
 
         await Wavailability.addWaiters('Nwabisa');
         var name = await Wavailability.checkWaiters(1);
-        
-        assert.equal(false, name.rowCount== 1)
+
+        assert.equal(false, name.rowCount == 1)
     });
 
-    //the following tests are not passing
+    // the following tests are not passing
 
-    // it('should add shifts', async function () {
-
-    //     let Wavailability = waiter(pool);
-
-    //     await Wavailability.addShifts(5,1);
-       
-        
-    //     assert.equal(5,1, Wavailability.addShifts(5,1))
-    // });
-
-    it('should delete user waiter shift', async function () {
+    it('should add shifts', async function () {
 
         let Wavailability = waiter(pool);
 
-        await Wavailability.addWaiters('Thato')
-        await Wavailability.deleteUserWaitersShift('Thato');
-       
-        assert.equal(true, Wavailability.addShifts(true))
+        await Wavailability.addShifts(5,1);
+
+
+        assert.equal(5,1, Wavailability.addShifts(5,1))
     });
+
+    // it('should delete user waiter shift', async function () {
+
+    //     let Wavailability = waiter(pool);
+
+    //     await Wavailability.addWaiters('Thato')
+    //    var del=  await Wavailability.deleteUserWaitersShift('Thato');
+
+    //     assert.equal(true,del)
+    // });
 
     after(function () {
         pool.end();

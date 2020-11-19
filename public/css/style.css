@@ -1,7 +1,7 @@
 body{
     text-align: center;
-    /* background-color: black; */
-    background-image: url("coffee.jpeg");
+     background-color: black;
+   /* background-image: url("coffee.jpeg"); */
     font-size: larger;
 }
 
@@ -9,9 +9,9 @@ h1,h2, .choose{
     color: yellow;
 }
 
-.pa{
+/* .pa{
     color: springgreen;
-}
+} */
 
 /* The container */
 .container {
@@ -27,6 +27,7 @@ h1,h2, .choose{
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    text-align: inline;
   }
   
   /* Hide the browser's default checkbox */
@@ -87,8 +88,31 @@ h1,h2, .choose{
       /* color: chartreuse; */
       font-size: larger;
       background-color: yellow;
+      color: black;
+      /* background-color: darkcyan; */
+      border-radius: 14px;
+      font-size: 20px;
+      border: none;
+      padding: 12px 20px;
+      
+  }
+
+  ul{
+   align-items: center;
   }
 
   button:hover{
     background-color: palevioletred;
+  }
+
+  .less{
+    color: orange;
+  }
+
+  .enough{
+    color: green;
+  }
+
+  .more{
+    color: red;
   }
