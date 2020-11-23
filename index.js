@@ -63,7 +63,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.get('/', function (req, res) {
+app.get('/waiters/', function (req, res) {
 
     res.render('index')
 })
@@ -73,32 +73,27 @@ app.post('/', function (req, res) {
     res.render('index')
 })
 
-// app.post('/weedays', async function (req, res) {
 
-
-//     res.render('weekdays')
-// })
-
-// app.get('/waiters', async function(req, res){
-
-
-//     res.render('waiters')
-// })
-
-app.get('/days', async function (req, res) {
+app.post('/days', async function (req, res) {
 
     // const waiters = await Wavailability.joinTables()
     res.render('days', {
-       // getList: waiters
+        // getList: waiters
     })
 })
 
-app.post('/days', async function(req, res){
+app.get('/days', async function (req, res) {
 
-    const waiters = await Wavailability.joinTables()
+    // const day = await Wavailability.getDays()
 
-    res.render('days',{
-        shifts: waiters 
+
+    const days = await Wavailability.getShifts()
+   
+
+    //  await Wavailability.addShifts(day, waiters)
+
+    res.render('days', {
+        days
     })
 })
 
@@ -119,15 +114,23 @@ app.post('/waiters/:username', async function (req, res) {
     var days = req.body.checkmark;
 
 
-    await Wavailability.addWaiters(name)
+   // await Wavailability.addWaiters(name)
 
     // await Wavailability.workFlow(days, name)
     await Wavailability.addShifts(name, days)
-    if (!days) {
+
+    if (days === undefined) {
         req.flash('error', 'Please choose a day(s) that you that you would like to work on')
         res.render('waiters');
         return;
     }
+    else {
+        req.flash('info', 'Days has been successfully added')
+        await Wavailability.addShifts(name, days)
+        res.render('waiters');
+        return;
+    }
+
 
     // else if (name === undefined) {
     //     req.flash('error', 'Oops! you forgot to enter your name, Please enter your name ')
@@ -148,33 +151,13 @@ app.post('/waiters/:username', async function (req, res) {
 })
 
 
-
-
 app.get('/reset', async function (req, res) {
 
-    await Wavailability.deleteDataFromWaiters()
+    await Wavailability.deleteDataFromShifts()
 
-    res.render('reset')
+    res.render('days')
 })
 
-// app.get('/waiters/:user', async function (req, res) {
-
-//     const user = req.params.name;
-
-//     const theUser = await Wavailability.getWaiterByName(user)
-
-
-//     var days = req.body.checkbox;
-
-//     if (!days) {
-//         req.flash('error', 'Please choose a day(s) that you that you would like to work on')
-//         res.render('waiters:user');
-//         return;
-
-//     }
-
-//     res.render('waiters/:user', { insertedName: `Hello, ${theUser},  please select the days that you're available on` })
-// })
 
 
 const PORT = process.env.PORT || 3000

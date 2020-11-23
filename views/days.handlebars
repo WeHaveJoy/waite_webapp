@@ -1,20 +1,72 @@
- <h1>CHAI COFFEE SHOP</h1>
+<h1>CHAI COFFEE SHOP</h1>
 <br>
 
 <ul>
-<li class="less">Less than 3 waiters</li>
-<li class="enough">Enough waiters</li>
-<li class="more">More than enough waiters</li>
+    <li class="less">Less than 3 waiters</li>
+    <li class="enough">Enough waiters</li>
+    <li class="more">More than enough waiters</li>
 </ul>
 
 <h2>Waiters Available: </h2>
 <br>
+
+<div class="tbl">
+
+    <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Day</th>
+                    <th scope="col">waiters</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each days}}
+                    <tr>
+                        <td >{{weekday}}</td>
+                        <td class="{{colors}}">
+                        {{#each waiters}}
+                           {{this}}, 
+                            
+                        {{/each}}
+                            </td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+
+    {{!-- <table>
+        <thead>
+            <tr>
+                {{#each days}}
+                <th> {{weekday}}</th>
+                {{/each}}
+
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                {{#each waiters}}
+
+
+                <td>
+                    <ul>{{#each waiters}}
+                        <li>
+
+                        </li>
+                        {{/each}}
+                    </ul>
+                </td>
+                {{/each}}
+            </tr>
+        </tbody>
+    </table> --}}
+
+
+</div>
+<br>
 <br>
 
-
-
-
-
-
 <button class="button-primary" type="submit" name="button"><a href="/reset">RESET</a></button>
-<button class="button-primary" type="submit" name="button"><a href="/waiters">HOME</a></button>
+<button class="button-primary" type="submit" name="button"><a href="/waiters/">HOME</a></button>
+

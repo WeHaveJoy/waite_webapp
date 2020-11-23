@@ -78,6 +78,7 @@ describe('The basic database Waiter Availability web app', function () {
 
         let Wavailability = waiter(pool);
 
+        await Wavailability.addWaiters()
         await Wavailability.addShifts(5,1);
 
 
@@ -93,6 +94,17 @@ describe('The basic database Waiter Availability web app', function () {
 
     //     assert.equal(true,del)
     // });
+
+
+    it('should join the waiters table and weekday table', async function () {
+
+        let Wavailability = waiter(pool);
+
+        await Wavailability.getDays()
+       var join=  await Wavailability.joinTables();
+
+        assert.equal(join, joi.rows)
+    });
 
     after(function () {
         pool.end();
