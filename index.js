@@ -155,14 +155,9 @@ app.post('/waiters/:username', async function (req, res) {
 
 app.get('/reset', async function (req, res) {
     
-  const del=  await Wavailability.deleteDataFromShifts()
-
-  if (del) {
     req.flash('info', 'You have successfully deleted data in a database')
-        res.render('days');
-        return;
-    }
-   
+  await Wavailability.deleteDataFromShifts()
+
     res.render('days', {
         del
     })
