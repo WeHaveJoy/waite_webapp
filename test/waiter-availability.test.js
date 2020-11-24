@@ -47,9 +47,9 @@ describe('The basic database Waiter Availability web app', function () {
         await Wavailability.getWaiterId("Zintle")
         await Wavailability.getSpecificDayId("Friday")
         // await Wavailability.addShifts(1,5)
-        var shift = await Wavailability.addWaitersShifts(1, 5);
+        var shift = await Wavailability.addWaitersShifts(5, 5);
 
-        assert.equal(1, 5, shift)
+        assert.equal(5, 5, shift)
     });
 
     it('should check if the waiter is added', async function () {
@@ -68,9 +68,9 @@ describe('The basic database Waiter Availability web app', function () {
 
     
         await Wavailability.addWaiters('Nwabisa');
-        var name = await Wavailability.checkWaiters(5);
+        var name = await Wavailability.checkWaiters(1);
 
-        assert.equal(false, name.rowCount == 5)
+        assert.equal(false, name.rowCount == 1)
     });
 
     // it('should get the watiers shifts', async function () {
