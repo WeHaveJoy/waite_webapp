@@ -68,9 +68,9 @@ describe('The basic database Waiter Availability web app', function () {
 
     
         await Wavailability.addWaiters('Nwabisa');
-        var name = await Wavailability.checkWaiters(1);
+        var name = await Wavailability.checkWaiters(5);
 
-        assert.equal(false, name.rowCount == 1)
+        assert.equal(false, name.rowCount == 5)
     });
 
     // it('should get the watiers shifts', async function () {

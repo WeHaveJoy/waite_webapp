@@ -155,7 +155,6 @@ app.post('/waiters/:username', async function (req, res) {
 
 app.get('/reset', async function (req, res) {
     
-
   const del=  await Wavailability.deleteDataFromShifts()
 
   if (del) {
@@ -164,7 +163,6 @@ app.get('/reset', async function (req, res) {
         return;
     }
    
-
     res.render('days', {
         del
     })
