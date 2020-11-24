@@ -88,7 +88,7 @@ app.get('/days', async function (req, res) {
 
 
     const days = await Wavailability.getShifts()
-   
+
 
     //  await Wavailability.addShifts(day, waiters)
 
@@ -114,7 +114,7 @@ app.post('/waiters/:username', async function (req, res) {
     var days = req.body.checkmark;
 
 
-   // await Wavailability.addWaiters(name)
+    // await Wavailability.addWaiters(name)
 
     // await Wavailability.workFlow(days, name)
     await Wavailability.addShifts(name, days)
@@ -127,10 +127,11 @@ app.post('/waiters/:username', async function (req, res) {
     else {
         req.flash('info', 'Days has been successfully added')
         await Wavailability.addShifts(name, days)
-        res.render('waiters');
-        return;
+        // res.render('waiters');
+        // return;
     }
 
+   // const selected = await Wavailability.daysChosen(name)
 
     // else if (name === undefined) {
     //     req.flash('error', 'Oops! you forgot to enter your name, Please enter your name ')
@@ -146,16 +147,27 @@ app.post('/waiters/:username', async function (req, res) {
 
     res.render('waiters', {
         username: name,
-        shift: days
+        shift: days,
+      //  selected
     })
 })
 
 
 app.get('/reset', async function (req, res) {
+    
 
-    await Wavailability.deleteDataFromShifts()
+  const del=  await Wavailability.deleteDataFromShifts()
 
-    res.render('days')
+  if (del) {
+    req.flash('info', 'You have successfully deleted data in a database')
+        res.render('days');
+        return;
+    }
+   
+
+    res.render('days', {
+        del
+    })
 })
 
 

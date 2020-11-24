@@ -11,19 +11,19 @@ module.exports = function Wavailability(pool) {
                 if (waiter.weekday == day.weekday) {
                     day.waiters.push(waiter.waiter_name)
                 }
-console.log(day.waiters);
+                //console.log(day.waiters);
 
                 if (day.waiters.length < 3) {
                     day.colors = 'needed'
                 } else if (day.waiters.length === 3) {
-                   day.colors = 'good'
-                } else if(day.waiters.length > 3){
+                    day.colors = 'good'
+                } else if (day.waiters.length > 3) {
                     day.colors = 'over'
                 }
             })
 
         });
-console.log(weekdays);
+        //console.log(weekdays);
 
         return weekdays;
     }
@@ -41,7 +41,24 @@ console.log(weekdays);
         }
         var getId = await getWaiterId(nameEntered)
         return getId;
+
+
     }
+
+async function daysChosen(day){
+    const days = await pool.query(`select weekday from shifts where waiter_name = $1`, [day])
+    const d = days.rows;
+
+    const weekd = await pool.query(`select * from weekdays`)
+    const w = weekd.rows;
+
+    w.forEach(chosenDays => {
+        if (daysChosen.weekday === chosenDays.weekdays) {
+            chosenDays.state = "checked"
+        }
+    })
+    return w;
+}
 
     async function checkDays(days) {
         var day = await pool.query(`select weekday_id from weekdays where weekday = $1`, [days])
@@ -122,7 +139,7 @@ console.log(weekdays);
         return day.rows;
     }
 
-    async function deleteDataFromWaiters() {
+    async function deleteDataFromShifts() {
         await pool.query(`delete from shifts`)
     }
 
@@ -135,7 +152,7 @@ console.log(weekdays);
         getWaiterId,
         joinTables,
         getWaiterByName,
-        deleteDataFromWaiters,
+        deleteDataFromShifts,
         checkWaiters,
         deleteUserWaitersShift,
         addShifts,
