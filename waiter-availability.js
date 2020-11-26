@@ -13,7 +13,7 @@ module.exports = function Wavailability(pool) {
                 }
                 //console.log(day.waiters);
 
-                if (day.waiters.length < 3) {
+                if (day.waiters.length === 1 && day.waiters.length < 3) {
                     day.colors = 'needed'
                 } else if (day.waiters.length === 3) {
                     day.colors = 'good'
@@ -45,20 +45,20 @@ module.exports = function Wavailability(pool) {
 
     }
 
-async function daysChosen(day){
-    const days = await pool.query(`select weekday from shifts where waiter_name = $1`, [day])
-    const d = days.rows;
+    async function daysChosen(day) {
+        const days = await pool.query(`select weekday from shifts where waiter_name = $1`, [day])
+        const d = days.rows;
 
-    const weekd = await pool.query(`select * from weekdays`)
-    const w = weekd.rows;
+        const weekd = await pool.query(`select * from weekdays`)
+        const w = weekd.rows;
 
-    w.forEach(chosenDays => {
-        if (daysChosen.weekday === chosenDays.weekdays) {
-            chosenDays.state = "checked"
-        }
-    })
-    return w;
-}
+        w.forEach(chosenDays => {
+            if (daysChosen.weekday === chosenDays.weekdays) {
+                chosenDays.state = "checked"
+            }
+        })
+        return w;
+    }
 
     async function checkDays(days) {
         var day = await pool.query(`select weekday_id from weekdays where weekday = $1`, [days])
@@ -157,6 +157,7 @@ async function daysChosen(day){
         deleteUserWaitersShift,
         addShifts,
         checkDays,
+        daysChosen,
         getSpecificDayId,
         getShifts
     }

@@ -108,11 +108,7 @@ app.get('/waiters/:username', async function (req, res) {
 app.post('/waiters/:username', async function (req, res) {
 
     var name = _.capitalize(req.params.username);
-
-    // console.log(name + "tyuiortyuitgh");
-
     var days = req.body.checkmark;
-
 
     // await Wavailability.addWaiters(name)
 
@@ -131,7 +127,7 @@ app.post('/waiters/:username', async function (req, res) {
         // return;
     }
 
-   // const selected = await Wavailability.daysChosen(name)
+    // const selected = await Wavailability.daysChosen(name)
 
     // else if (name === undefined) {
     //     req.flash('error', 'Oops! you forgot to enter your name, Please enter your name ')
@@ -148,18 +144,18 @@ app.post('/waiters/:username', async function (req, res) {
     res.render('waiters', {
         username: name,
         shift: days,
-      //  selected
+        //  selected
     })
 })
 
 
 app.get('/reset', async function (req, res) {
-    
+
     req.flash('info', 'You have successfully deleted data in a database')
-  await Wavailability.deleteDataFromShifts()
+    await Wavailability.deleteDataFromShifts()
 
     res.render('days', {
-        del
+        
     })
 })
 

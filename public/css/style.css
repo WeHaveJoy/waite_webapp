@@ -87,7 +87,7 @@ h1,h2, .choose{
   } */
   
   /* Style the checkmark/indicator */
-  /* .container .checkmark:after {
+  .container .checkmark:after {
     left: 9px;
     top: 5px;
     width: 5px;
@@ -97,14 +97,13 @@ h1,h2, .choose{
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
-  } */
+  }
 
   button{
       /* color: chartreuse; */
       font-size: larger;
       background-color: yellow;
       color: black;
-      /* background-color: darkcyan; */
       border-radius: 14px;
       font-size: 20px;
       border: none;
@@ -129,7 +128,7 @@ h1,h2, .choose{
   }
 
   .less{
-    color: blue;
+    color: lightslategrey;
   }
 
   .enough{
@@ -141,7 +140,7 @@ h1,h2, .choose{
   }
   
   .needed{
-    background-color: blue;
+    background-color: lightslategrey;
   }
   .good{
     background-color: green;
