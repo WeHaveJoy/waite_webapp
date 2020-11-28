@@ -13,7 +13,7 @@ module.exports = function Wavailability(pool) {
                 }
                 //console.log(day.waiters);
 
-                if (day.waiters.length === 1 && day.waiters.length < 3) {
+                if (day.waiters.length < 3) {
                     day.colors = 'needed'
                 } else if (day.waiters.length === 3) {
                     day.colors = 'good'
@@ -34,6 +34,11 @@ module.exports = function Wavailability(pool) {
 
     }
 
+    // async function displayDays() {
+    //     var days = await pool.query(`select weekday from weekdays`)
+    //     return days.rows;
+    // }
+
     async function addWaiters(nameEntered) {
         var name = await pool.query(`select waiter_name from waiters where waiter_name=$1`, [nameEntered])
         if (name.rowCount == 0) {
@@ -41,22 +46,40 @@ module.exports = function Wavailability(pool) {
         }
         var getId = await getWaiterId(nameEntered)
         return getId;
-
-
     }
 
-    async function daysChosen(day) {
-        const days = await pool.query(`select weekday from shifts where waiter_name = $1`, [day])
-        const d = days.rows;
+    async function addDays(dayChosen) {
+        var days = await pool.query(`select weekday from weekdays where weekday=$1`, [dayChosen]);
+        return days.rows;
+    }
 
-        const weekd = await pool.query(`select * from weekdays`)
+
+    async function workingDays(user) {
+        var days = await pool.query(`select weekday from shifts join weekdays on shifts.weekd_id = weekdays.weekday_id join waiters on shifts.waiter_id = waiters.waiters_id where waiter_name=$1`, [user]);
+        return days.rows;
+    }
+
+    async function daysChosen(user) {
+        // const days = await pool.query(`select weekday from shifts where waiter_name = $1`, [day])
+        // const d = days.rows;
+        var days = await workingDays(user)
+        // console.log(days);
+
+        const weekd = await pool.query(`select weekday from weekdays`)
         const w = weekd.rows;
 
-        w.forEach(chosenDays => {
-            if (daysChosen.weekday === chosenDays.weekdays) {
-                chosenDays.state = "checked"
-            }
+        w.forEach(chosenDays1 => {
+            // console.log(chosenDays1.weekday);
+            days.forEach(work => {
+
+
+                if (chosenDays1.weekday === work.weekday) {
+                    chosenDays1.state = "checked"
+                }
+            });
+
         })
+
         return w;
     }
 
@@ -75,7 +98,7 @@ module.exports = function Wavailability(pool) {
         //console.log(waiterid);;
         var name = await addWaiters(waiterid)
         // await getWaiterId(waiterId)
-        console.log(name);
+        // console.log(name);
 
         await pool.query(`delete from shifts where waiter_id = $1`, [name])
         // for (let i = 0; i < weekdayIds.length; i++) {
@@ -157,7 +180,10 @@ module.exports = function Wavailability(pool) {
         deleteUserWaitersShift,
         addShifts,
         checkDays,
+        //  displayDays,
         daysChosen,
+        addDays,
+        workingDays,
         getSpecificDayId,
         getShifts
     }

@@ -111,13 +111,14 @@ h1,h2, .choose{
       
   }
 
-  .error{
+  .flash{
     color: red;
   }
 
   .success{
     color: green;
   }
+
 
   ul{
    align-items: center;

@@ -8,37 +8,15 @@
     </div> --}}
     <br>
     <div class="days">
-      <strong class="choose">Hi {{this.waiter_name}}, Choose the day(s) you would like to work on, don't choose more than 3 days:</strong>
+      <strong class="choose">Hi {{this.waiter_name}}, Choose the day(s) you would like to work on, don't choose more
+        than 3 days:</strong>
       <br> <br>
-
-      <label class="container">Sunday
-        <input type="checkbox" name="checkmark" value="Sunday">
-        <span class="checkmark"></span>
-      </label>
-      <label class="container">Monday
-        <input type="checkbox" name="checkmark" value="Monday">
-        <span class="checkmark"></span>
-      </label>
-      <label class="container">Tuesday
-        <input type="checkbox" name="checkmark" value="Tuesday">
-        <span class="checkmark"></span>
-      </label>
-      <label class="container">Wednesday
-        <input type="checkbox" name="checkmark" value="Wednesday">
-        <span class="checkmark"></span>
-      </label>
-      <label class="container">Thursday
-        <input type="checkbox" name="checkmark" value="Thursday">
-        <span class="checkmark"></span>
-      </label>
-      <label class="container">Friday
-        <input type="checkbox" name="checkmark" value="Friday">
-        <span class="checkmark"></span>
-      </label>
-      <label class="container">Saturday
-        <input type="checkbox" name="checkmark" value="Saturday">
-        <span class="checkmark"></span>
-      </label>
+      {{#each b}}
+      {{!-- <label class="container"> --}}
+        <input type="checkbox" name="checkmark" {{state}} value="{{this.weekday}}">
+        <span class="checkmark">{{this.weekday}}</span>
+      {{!-- </label> --}}
+      {{/each}}
 
       <br> <br>
       <div class="flash">
@@ -65,5 +43,4 @@
     document.querySelector(".flash").innerHTML = "";
     document.querySelector(".success").innerHTML = ""
   }, 2000);
-
 </script>

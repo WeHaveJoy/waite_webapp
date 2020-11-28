@@ -1,8 +1,8 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
-//const Routes = require('./routes');
 const waiter = require('./waiter-availability.js');
+const Routes = require('./routes');
 const session = require('express-session');
 const flash = require('express-flash');
 const _ = require('lodash');
@@ -20,6 +20,7 @@ const pool = new Pool({
 });
 
 const Wavailability = waiter(pool);
+const routes = Routes(Wavailability);
 
 
 app.use(session({
@@ -63,101 +64,21 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.get('/waiters/', function (req, res) {
+app.get('/waiters/', routes.index)
 
-    res.render('index')
-})
-
-app.post('/', function (req, res) {
-
-    res.render('index')
-})
+app.post('/', routes.index)
 
 
-app.post('/days', async function (req, res) {
+app.post('/days', routes.days)
 
-    // const waiters = await Wavailability.joinTables()
-    res.render('days', {
-        // getList: waiters
-    })
-})
+app.get('/days', routes.days)
 
-app.get('/days', async function (req, res) {
+app.get('/waiters/:username',routes.getWaiters)
 
-    // const day = await Wavailability.getDays()
+app.post('/waiters/:username', routes.postWaiters)
 
 
-    const days = await Wavailability.getShifts()
-
-
-    //  await Wavailability.addShifts(day, waiters)
-
-    res.render('days', {
-        days
-    })
-})
-
-app.get('/waiters/:username', async function (req, res) {
-    var name = (req.params.username);
-
-    res.render('waiters', {
-        waiter_name: name
-    })
-})
-
-app.post('/waiters/:username', async function (req, res) {
-
-    var name = _.capitalize(req.params.username);
-    var days = req.body.checkmark;
-
-    // await Wavailability.addWaiters(name)
-
-    // await Wavailability.workFlow(days, name)
-    await Wavailability.addShifts(name, days)
-
-    if (days === undefined) {
-        req.flash('error', 'Please choose a day(s) that you that you would like to work on')
-        res.render('waiters');
-        return;
-    }
-    else {
-        req.flash('info', 'Days has been successfully added')
-        await Wavailability.addShifts(name, days)
-        // res.render('waiters');
-        // return;
-    }
-
-    // const selected = await Wavailability.daysChosen(name)
-
-    // else if (name === undefined) {
-    //     req.flash('error', 'Oops! you forgot to enter your name, Please enter your name ')
-    //     res.render('waiters');
-    //     return;
-    // }
-
-    // else if (isNaN(name) === false) {
-    //     req.flash('error', "Please don't enter a number")
-    //     res.render('index');
-    //     return;
-    // }
-
-    res.render('waiters', {
-        username: name,
-        shift: days,
-        //  selected
-    })
-})
-
-
-app.get('/reset', async function (req, res) {
-
-    req.flash('info', 'You have successfully deleted data in a database')
-    await Wavailability.deleteDataFromShifts()
-
-    res.render('days', {
-        
-    })
-})
+app.get('/reset', routes.reset)
 
 
 
