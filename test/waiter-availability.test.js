@@ -32,9 +32,9 @@ describe('The basic database Waiter Availability web app', function () {
 
         let Wavailability = waiter(pool);
 
-        await Wavailability.addDays("Monday");
+        await Wavailability.addDays("Sunday");
         var days = await Wavailability.getDays();
-        assert.equal("Monday", days[0].weekday);
+        assert.equal("Sunday", days[0].weekday);
 
     });
 
@@ -59,6 +59,9 @@ describe('The basic database Waiter Availability web app', function () {
         await Wavailability.workingDays(days)
         assert.deepEqual([
             {
+                weekday: 'Sunday'
+              },
+            {
               weekday: 'Monday'
             },
             {
@@ -72,7 +75,10 @@ describe('The basic database Waiter Availability web app', function () {
             },
             {
               weekday: 'Friday'
-            }
+            },
+            {
+                weekday: 'Saturday'
+              },
           ]
           , await Wavailability.daysChosen())
     });
