@@ -107,7 +107,7 @@ module.exports = function Wavailability(pool) {
         //     await getSpecificDayId(weekdayIds)
         //     await pool.query(`insert into shifts(weekD_id, waiter_id) values($1, $2)`, [waiterid, dayId])
         // }
-console.log(waiterid);
+        console.log(waiterid);
 
         for (const day of weekdayIds) {
             var d = await getSpecificDayId(day)

@@ -68,7 +68,7 @@ module.exports = function routes(Wavailability) {
         const b = await Wavailability.daysChosen(name)
         res.render('waiters', {
             b,
-            username: name,
+            waiter_name: name,
             shift: days,
         })
     }
