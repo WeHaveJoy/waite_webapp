@@ -38,7 +38,6 @@ describe('The basic database Waiter Availability web app', function () {
 
     });
 
-
     it('should get waiter by name', async function () {
 
         let Wavailability = waiter(pool);
@@ -55,29 +54,29 @@ describe('The basic database Waiter Availability web app', function () {
 
         let Wavailability = waiter(pool);
 
-        await Wavailability.addShifts('Sino', ['Monday','Tuesday'])
-        const selectedDays =await Wavailability.daysChosen('Sino')
+        await Wavailability.addShifts('Sino', ['Monday', 'Tuesday'])
+        const selectedDays = await Wavailability.daysChosen('Sino')
 
-        assert.deepEqual( [
+        assert.deepEqual([
             {
-              state: 'checked',
-              weekday: 'Monday'
+                state: 'checked',
+                weekday: 'Monday'
             },
             {
-              state: 'checked',
-              weekday: 'Tuesday'
+                state: 'checked',
+                weekday: 'Tuesday'
             },
             {
-              weekday: 'Wednesday'
+                weekday: 'Wednesday'
             },
             {
-              weekday: 'Thursday'
+                weekday: 'Thursday'
             },
             {
-              weekday: 'Friday'
+                weekday: 'Friday'
             }
-          ]
-          , selectedDays)
+        ]
+            , selectedDays)
     });
 
     it('should check if the waiter is added', async function () {
@@ -96,22 +95,53 @@ describe('The basic database Waiter Availability web app', function () {
 
 
         await Wavailability.addWaiters('Nwabisa');
-        var name = await Wavailability.checkWaiters(1);
-
+        var name = await Wavailability.checkWaiters('Nwabisa');
         assert.equal(false, name.rowCount == 1)
     });
-
-
 
     it('should add shifts', async function () {
 
         let Wavailability = waiter(pool);
-        await Wavailability.addWaiters('Nwabisa');
-        var name = await Wavailability.checkWaiters(1);
 
-        assert.equal(false, name.rowCount == 1)
+        // var name = await Wavailability.checkWaiters('Zimi');
+        await Wavailability.addShifts('Zimi', ['Monday']);
+        const shifts = await Wavailability.getShifts()
+        assert.deepEqual( [
+            {
+              colors: 'needed',
+              waiters: [
+                'Zimi'
+              ],
+              weekday: 'Monday',
+              weekday_id: 1
+            },
+            {
+              colors: 'needed',
+              waiters: [],
+              weekday: 'Tuesday',
+              weekday_id: 2
+            },
+            {
+              colors: 'needed',
+              waiters: [],
+              weekday: 'Wednesday',
+              weekday_id: 3
+            },
+            {
+              colors: 'needed',
+              waiters: [],
+              weekday: 'Thursday',
+              weekday_id: 4
+            },
+            {
+              colors: 'needed',
+              waiters: [],
+              weekday: 'Friday',
+              weekday_id: 5
+            }
+          ]
+           , shifts)
     });
-
 
     it('should  delete data from shifts', async function () {
         let Wavailability = waiter(pool);
@@ -120,7 +150,6 @@ describe('The basic database Waiter Availability web app', function () {
         const del = await Wavailability.deleteDataFromShifts()
         assert.equal(2, 2, del)
     })
-
 
     after(function () {
         pool.end();
