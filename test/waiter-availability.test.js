@@ -54,17 +54,17 @@ describe('The basic database Waiter Availability web app', function () {
     it('should pass the test for the check boxes to remain checked when the waiter has selected their days.', async function () {
 
         let Wavailability = waiter(pool);
-        
-        const days = Wavailability.daysChosen()
-        await Wavailability.workingDays(days)
-        assert.deepEqual([
+
+        await Wavailability.addShifts('Sino', ['Monday','Tuesday'])
+        const selectedDays =await Wavailability.daysChosen('Sino')
+
+        assert.deepEqual( [
             {
-                weekday: 'Sunday'
-              },
-            {
+              state: 'checked',
               weekday: 'Monday'
             },
             {
+              state: 'checked',
               weekday: 'Tuesday'
             },
             {
@@ -75,12 +75,9 @@ describe('The basic database Waiter Availability web app', function () {
             },
             {
               weekday: 'Friday'
-            },
-            {
-                weekday: 'Saturday'
-              },
+            }
           ]
-          , await Wavailability.daysChosen())
+          , selectedDays)
     });
 
     it('should check if the waiter is added', async function () {
@@ -104,16 +101,6 @@ describe('The basic database Waiter Availability web app', function () {
         assert.equal(false, name.rowCount == 1)
     });
 
-    // it('should get the watiers shifts', async function () {
-
-    //     let Wavailability = waiter(pool);
-
-    // await Wavailability.addShifts("sino", "Friday")
-    //  const shifts=  await Wavailability.getShifts();
-
-
-    //     assert.equal(false, name.rowCount == 1)
-    // });
 
 
     it('should add shifts', async function () {
@@ -126,50 +113,12 @@ describe('The basic database Waiter Availability web app', function () {
     });
 
 
-    // it('should join the waiters table and weekday table', async function () {
-
-    //     let Wavailability = waiter(pool);
-
-       
-    //    var join=  await Wavailability.getShifts();
-    //    await Wavailability.workingDays(join)
-
-    //     assert.deepEqual([
-    //         {
-    //           waiters: [],
-    //           weekday: 'Monday',
-    //           weekday_id: 1
-    //         },
-    //         {
-    //           waiters: [],
-    //           weekday: 'Tuesday',
-    //           weekday_id: 2
-    //         },
-    //         {
-    //           waiters: [],
-    //           weekday: 'Wednesday',
-    //           weekday_id: 3
-    //         },
-    //         {
-    //           waiters: [],
-    //           weekday: 'Thursday',
-    //           weekday_id: 4
-    //         },
-    //         {
-    //           waiters: [],
-    //           weekday: 'Friday',
-    //           weekday_id: 5
-    //         }
-    //       ]
-          
-    //        , await Wavailability.workingDays())
-    // });
-
     it('should  delete data from shifts', async function () {
         let Wavailability = waiter(pool);
 
-        await Wavailability.deleteDataFromShifts()
-        
+        await Wavailability.addShifts('Sino', 'Monday')
+        const del = await Wavailability.deleteDataFromShifts()
+        assert.equal(2, 2, del)
     })
 
 

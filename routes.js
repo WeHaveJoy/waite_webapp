@@ -40,6 +40,8 @@ module.exports = function routes(Wavailability) {
         
         
         const b = await Wavailability.daysChosen(name)
+        console.log(b);
+        
         res.render('waiters', {
             b,
             waiter_name: name
@@ -73,12 +75,10 @@ module.exports = function routes(Wavailability) {
 
     async function reset (req, res) {
 
-        req.flash('info', 'You have successfully deleted data in a database')
         await Wavailability.deleteDataFromShifts()
-    
-        res.render('days', {
-    
-        })
+        req.flash('info', 'You have successfully deleted data in a database')
+
+        res.redirect('days',)
     }
 
 return{
@@ -87,7 +87,6 @@ return{
     reset,
     getWaiters,
     postWaiters
-//  : (req, res) => res.send('Hello')
 }
 
 }

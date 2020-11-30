@@ -6,7 +6,12 @@
     <li class="enough">Enough waiters</li>
     <li class="more">More than enough waiters</li>
 </ul>
-
+<br>
+<div class="success">
+    {{#if messages.info}}
+    {{messages.info}}
+    {{/if}}
+</div>
 <h2>Waiters Available: </h2>
 <br>
 
@@ -39,3 +44,9 @@
 
 <button class="button-primary" type="submit" name="button"><a href="/reset">RESET</a></button>
 <button class="button-primary" type="submit" name="button"><a href="/waiters/">HOME</a></button>
+
+<script>
+    setTimeout(function () {
+        document.querySelector(".success").innerHTML = ""
+    }, 2000);
+</script>
